@@ -208,6 +208,7 @@
 
           &-image {
             width: 100%;
+            cursor: pointer;
           }
           &-title {
             font-size: 20px;
@@ -228,6 +229,61 @@
             width: 300px;
             margin-bottom: 0;
           }
+        }
+      }
+    }
+  }
+  .details {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+    
+    &__image {
+      border: 10px solid #ddd;
+      border-radius: 2px;
+      padding: 0 40px;
+    }
+    &__info {
+      padding-left: 30px;
+
+      button {
+        padding: 10px 20px;
+        background: #4ebaaa;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+          background: #5dcfbe;
+        }
+      }
+
+      h1 {
+        padding-top: 30px;
+        font-size: 26px;
+      }
+      p {
+        padding-top: 20px;
+      }
+    }
+
+
+    .phone-thumbs {
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: 20px;
+      li{
+        border: 1px solid #005b4f;
+        border-radius: 2px;
+        margin: 10px;
+        cursor: pointer;
+        img {
+          width: 120px;
+          margin: 0 10px;
+          
         }
       }
     }

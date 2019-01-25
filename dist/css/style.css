@@ -163,7 +163,8 @@
         margin: 20px;
         transition: all 0.2s ease-out; }
         .content .phones .card__holder .phone__item-image {
-          width: 100%; }
+          width: 100%;
+          cursor: pointer; }
         .content .phones .card__holder .phone__item-title {
           font-size: 20px;
           font-weight: bold;
@@ -179,3 +180,41 @@
         .content .phones .card__holder .phone__item:hover {
           width: 300px;
           margin-bottom: 0; }
+  .content .details {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px; }
+    .content .details__image {
+      border: 10px solid #ddd;
+      border-radius: 2px;
+      padding: 0 40px; }
+    .content .details__info {
+      padding-left: 30px; }
+      .content .details__info button {
+        padding: 10px 20px;
+        background: #4ebaaa;
+        border: 1px solid transparent;
+        border-radius: 3px;
+        color: white;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer; }
+        .content .details__info button:hover {
+          background: #5dcfbe; }
+      .content .details__info h1 {
+        padding-top: 30px;
+        font-size: 26px; }
+      .content .details__info p {
+        padding-top: 20px; }
+    .content .details .phone-thumbs {
+      display: flex;
+      flex-wrap: wrap;
+      padding-top: 20px; }
+      .content .details .phone-thumbs li {
+        border: 1px solid #005b4f;
+        border-radius: 2px;
+        margin: 10px;
+        cursor: pointer; }
+        .content .details .phone-thumbs li img {
+          width: 120px;
+          margin: 0 10px; }
