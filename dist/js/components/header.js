@@ -12,17 +12,8 @@ export default class Header {
       <span class="logo">phone shop</span>
     </div>
     <div class="header__search" data-element="searcher"></div>
-    <div class="header__sort">
-      <span>Sort by:</span>
-      <select>
-        <option value="">Alphabetical</option>
-        <option value="">Newest</option>
-      </select>
-    </div>
-    <div class="header__basket">
-      <img src="./images/cart-arrow-down-solid.svg" alt="basket" />
-      <span></span>
-    </div>
+    <div class="header__sort" data-element="sorter"></div>
+    <div class="header__basket"></div>
     `;
   }
 }

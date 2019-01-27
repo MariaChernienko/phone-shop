@@ -1,7 +1,14 @@
 export default class Basket {
   constructor({
- element, title, items, open 
+    icon,
+    itemsCounter,
+    element, 
+    title, 
+    items, 
+    open 
 }) {
+    this.icon = icon;
+    this.itemsCounter = itemsCounter;
     this.element = element;
     this.title = title;
     this.items = items;
@@ -13,6 +20,10 @@ export default class Basket {
   }
 
   render() {
+    this.icon.innerHTML = `
+      <img src="./images/cart-arrow-down-solid.svg" alt="basket" />
+      <span>${this.itemsCounter}</span>
+    `;
     this.element.innerHTML = `
     <div class="basket__overlay"></div>
     <div class="basket__content">
@@ -20,7 +31,7 @@ export default class Basket {
       <h3 class="basket__content-title">${this.title}</h3>
       <ul class="basket__content-list">
         ${this.items
-    .map(item => `<li>${item} <span>(2)</span><button>x</button></li>`)
+    .map(item => `<li>${item} <span></span><button>x</button></li>`)
     .join('')}
       </ul>
     </div>
