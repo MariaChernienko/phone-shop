@@ -4,6 +4,7 @@ import Basket from './components/basket.js';
 import PhonesCatalog from './components/phones-catalog.js';
 import PhoneViewer from './components/phone-viewer.js';
 import Services from './components/services.js';
+import Sorter from './components/sorter.js';
 
 
 export default class PhonesPage {
@@ -14,27 +15,22 @@ export default class PhonesPage {
 
     this.header = new Header({
       element: document.querySelector('.header'),
+      val: 0,
     });
 
     this.searcher = new Searcher({
       element: document.querySelector('[data-element="searcher"]'),
-      // items: Services.getAll(),
-      // onSort: (items, inputValue) => {
-      //   return items.filter(element => element.id.indexOf(inputValue.toLowerCase()) !== -1);
-      // }
-      
-      
+    });
+    this.sorter = new Sorter({
+      element: document.querySelector('[data-element="sorter"]'),
     });
 
     this.basket = new Basket({
+      icon: document.querySelector('.header__basket'),
+      itemsCounter: 0,
       element: document.querySelector('.basket'),
       title: 'Shopping Cart',
-      items: [
-        'Samsung Galaxy S9',
-        'Samsung Galaxy S9',
-        'Samsung Galaxy S9',
-        'Samsung Galaxy S9',
-      ],
+      items: [],
       open: document.querySelector('.header__basket'),
     });
 
@@ -45,6 +41,13 @@ export default class PhonesPage {
         let phoneDetails = Services.getById(phoneId);
         this.catalog.hide();
         this.viewer.show(phoneDetails);
+      }, 
+      
+      addToBasket: (phoneId) => {
+        this.basket.items.push(phoneId);
+        this.basket.itemsCounter = this.basket.items.length;
+        this.basket.render();
+        this.basket.closeBasket();
       }
     });
 

@@ -3,21 +3,24 @@ export default class PhonesCatalog {
     element,
     items,
     onPhoneSelected = () => {},
+    addToBasket = () => {},
   }) {
     this.element = element;
     this.items = items;
     this.onPhoneSelected = onPhoneSelected;
+    this.addToBasket = addToBasket;
 
     this.element.addEventListener('click', (e) => {
       const detailsLink = e.target.closest('[data-element="details-link"]');
-
-      if (!detailsLink) {
-        return;
-      }
-      e.preventDefault();
+      const addBtn = e.target.closest('[data-element="add-to-basket"]');
       const phoneElement = e.target.closest('[data-element="phone-item"]');
 
-      this.onPhoneSelected(phoneElement.dataset.phoneId);
+      if (detailsLink) {
+        e.preventDefault();
+        this.onPhoneSelected(phoneElement.dataset.phoneId);
+      } else if (addBtn) {
+        this.addToBasket(phoneElement.dataset.name);
+      }
     });
 
     this.render();
@@ -50,7 +53,7 @@ export default class PhonesCatalog {
         <a href="/phones/${item.id}" class="phone__item-title" data-element="details-link">${item.name}</a>
         <p class="phone__item-article">${item.snippet}</p>
         <div class="phone__item-btnHolder">
-          <div class="addBtn">Add</div>
+          <div class="addBtn" data-element="add-to-basket">Add</div>
         </div>
       </div>
     </li>`,

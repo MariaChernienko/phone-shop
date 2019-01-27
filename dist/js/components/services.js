@@ -169,7 +169,7 @@ const phones = [
   }
 ];
 const phoneDetails = {
-  "dell-streak-7": {
+  "dell-streak-7": {                          
     additionalFeatures: "Front Facing 1.3MP Camera",
     android: {
       os: "Android 2.2",
