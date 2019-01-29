@@ -1,16 +1,20 @@
 export default class PhoneViewer {
-  constructor({ element, onCatalog = () => {} }) {
+  constructor({ element, onCatalog = () => {}, addToBasket = () => {} }) {
     this.element = element;
     this.onCatalog = onCatalog; 
+    this.addToBasket = addToBasket;
 
     this.element.addEventListener('click', (e) => {
-      let buttonBack = e.target.closest('[data-button="back"]');
-  
-      if(!buttonBack) {
-        return;
-      }
+      const buttonBack = e.target.closest('[data-button="back"]');
+      const addBtn = e.target.closest('[data-element="add-to-basket"]');
+      const itemName = this.element.querySelector('[data-name]').innerHTML;
 
-      this.onCatalog();
+      if(buttonBack) {
+        this.onCatalog();
+      } else if(addBtn) {
+        console.log(itemName);
+        this.addToBasket(e.target);
+      }
     });
   }
   
@@ -29,9 +33,9 @@ export default class PhoneViewer {
       <img class="details__image" src="${this._phoneDetails.images[0]}">
       <div class="details__info">
         <button data-button="back">Back</button>
-        <button>Add to basket</button>
+        <button data-element="add-to-basket">Add to basket</button>
 
-        <h1>${this._phoneDetails.name}</h1>
+        <h1 data-name>${this._phoneDetails.name}</h1>
 
         <p>${this._phoneDetails.description}</p>
 

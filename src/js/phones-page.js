@@ -1,11 +1,8 @@
 import Header from './components/header.js';
-import Searcher from './components/searcher.js';
 import Basket from './components/basket.js';
 import PhonesCatalog from './components/phones-catalog.js';
 import PhoneViewer from './components/phone-viewer.js';
 import Services from './components/services.js';
-import Sorter from './components/sorter.js';
-
 
 export default class PhonesPage {
   constructor({ element }) {
@@ -16,13 +13,6 @@ export default class PhonesPage {
     this.header = new Header({
       element: document.querySelector('.header'),
       val: 0,
-    });
-
-    this.searcher = new Searcher({
-      element: document.querySelector('[data-element="searcher"]'),
-    });
-    this.sorter = new Sorter({
-      element: document.querySelector('[data-element="sorter"]'),
     });
 
     this.basket = new Basket({
@@ -37,25 +27,34 @@ export default class PhonesPage {
     this.catalog = new PhonesCatalog({
       element: this.element.querySelector('[data-component="phone-catalog"]'),
       items: Services.getAll(),
+      counter: this.basket.itemsCounter,
+
       onPhoneSelected: (phoneId) => {
-        let phoneDetails = Services.getById(phoneId);
+        const phoneDetails = Services.getById(phoneId);
         this.catalog.hide();
         this.viewer.show(phoneDetails);
-      }, 
-      
+      },
       addToBasket: (phoneId) => {
         this.basket.items.push(phoneId);
-        this.basket.itemsCounter = this.basket.items.length;
+        this.basket.itemsCounter = this.catalog.increaseBasket(this.counter);
         this.basket.render();
         this.basket.closeBasket();
-      }
+      },
     });
 
     this.viewer = new PhoneViewer({
       element: this.element.querySelector('[data-component="phone-viewer"]'),
+      items: Services.getAll(),
+      counter: this.basket.itemsCounter,
       onCatalog: () => {
         this.catalog.show();
         this.viewer.hide();
+      },
+      addToBasket: (phoneId) => {
+        this.basket.items.push(phoneId);
+        this.basket.itemsCounter = this.catalog.increaseBasket(this.counter);
+        this.basket.render();
+        this.basket.closeBasket();
       }
     });
   }
@@ -67,5 +66,3 @@ export default class PhonesPage {
     `;
   }
 }
-
-

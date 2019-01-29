@@ -2,11 +2,11 @@ export default class Basket {
   constructor({
     icon,
     itemsCounter,
-    element, 
-    title, 
-    items, 
-    open 
-}) {
+    element,
+    title,
+    items,
+    open,
+  }) {
     this.icon = icon;
     this.itemsCounter = itemsCounter;
     this.element = element;
@@ -17,9 +17,17 @@ export default class Basket {
     this.render();
     this.closeBasket();
     this.openBasket();
+
   }
 
   render() {
+
+    this.items = this.items.filter((a, b) => {
+      if (this.items.indexOf(a) === b) {
+        return true;
+      } a.counter++;
+    });
+
     this.icon.innerHTML = `
       <img src="./images/cart-arrow-down-solid.svg" alt="basket" />
       <span>${this.itemsCounter}</span>
@@ -31,7 +39,7 @@ export default class Basket {
       <h3 class="basket__content-title">${this.title}</h3>
       <ul class="basket__content-list">
         ${this.items
-    .map(item => `<li>${item} <span></span><button>x</button></li>`)
+    .map(item => `<li>${item.name}## ${item.counter}<button>x</button></li>`)
     .join('')}
       </ul>
     </div>
@@ -60,5 +68,8 @@ export default class Basket {
           .querySelector('.basket__content')
           .classList.remove('active_content');
       });
+    }
   }
-}
+
+  
+

@@ -1,8 +1,18 @@
+import Searcher from './searcher.js';
+import Sorter from './sorter.js';
+
 export default class Header {
   constructor({ element }) {
     this.element = element;
 
     this.render();
+
+    this.searcher = new Searcher({
+      element: document.querySelector('[data-element="searcher"]'),
+    });
+    this.sorter = new Sorter({
+      element: document.querySelector('[data-element="sorter"]'),
+    });
   }
 
   render() {
