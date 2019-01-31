@@ -1,23 +1,31 @@
+import Services from "./services.js";
+
 export default class PhoneViewer {
   constructor({ element, onCatalog = () => {}, addToBasket = () => {} }) {
     this.element = element;
-    this.onCatalog = onCatalog; 
+    this.onCatalog = onCatalog;
     this.addToBasket = addToBasket;
 
-    this.element.addEventListener('click', (e) => {
+    this.element.addEventListener("click", e => {
       const buttonBack = e.target.closest('[data-button="back"]');
       const addBtn = e.target.closest('[data-element="add-to-basket"]');
-      const itemName = this.element.querySelector('[data-name]').innerHTML;
+      const phoneElement = e.target.closest('[data-element="phone-item"]');
+      let phoneName;
 
-      if(buttonBack) {
+      Services.getAll().find(e => {
+        if (e.id === phoneElement.dataset.phoneId) {
+          phoneName = e;
+        }
+      });
+
+      if (buttonBack) {
         this.onCatalog();
-      } else if(addBtn) {
-        console.log(itemName);
-        this.addToBasket(e.target);
+      } else if (addBtn) {
+        this.addToBasket(phoneName);
       }
     });
   }
-  
+
   show(phoneDetails) {
     this._phoneDetails = phoneDetails;
     this.element.hidden = false;
@@ -29,7 +37,9 @@ export default class PhoneViewer {
 
   render() {
     this.element.innerHTML = `
-    <div class="details"> 
+    <div class="details"
+      data-phone-id="${this._phoneDetails.id}"
+      data-element="phone-item"> 
       <img class="details__image" src="${this._phoneDetails.images[0]}">
       <div class="details__info">
         <button data-button="back">Back</button>

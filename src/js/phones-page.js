@@ -1,8 +1,8 @@
-import Header from './components/header.js';
-import Basket from './components/basket.js';
-import PhonesCatalog from './components/phones-catalog.js';
-import PhoneViewer from './components/phone-viewer.js';
-import Services from './components/services.js';
+import Header from "./components/header.js";
+import Basket from "./components/basket.js";
+import PhonesCatalog from "./components/phones-catalog.js";
+import PhoneViewer from "./components/phone-viewer.js";
+import Services from "./components/services.js";
 
 export default class PhonesPage {
   constructor({ element }) {
@@ -11,50 +11,41 @@ export default class PhonesPage {
     this.render();
 
     this.header = new Header({
-      element: document.querySelector('.header'),
-      val: 0,
+      element: document.querySelector(".header")
     });
 
     this.basket = new Basket({
-      icon: document.querySelector('.header__basket'),
-      itemsCounter: 0,
-      element: document.querySelector('.basket'),
-      title: 'Shopping Cart',
+      icon: document.querySelector(".header__basket"),
+      element: document.querySelector(".basket"),
       items: [],
-      open: document.querySelector('.header__basket'),
+      itemsCounter: 0,
+      open: document.querySelector(".header__basket")
     });
 
     this.catalog = new PhonesCatalog({
       element: this.element.querySelector('[data-component="phone-catalog"]'),
       items: Services.getAll(),
-      counter: this.basket.itemsCounter,
 
-      onPhoneSelected: (phoneId) => {
+      onPhoneSelected: phoneId => {
         const phoneDetails = Services.getById(phoneId);
         this.catalog.hide();
         this.viewer.show(phoneDetails);
       },
-      addToBasket: (phoneId) => {
+      addToBasket: phoneId => {
         this.basket.items.push(phoneId);
-        this.basket.itemsCounter = this.catalog.increaseBasket(this.counter);
         this.basket.render();
-        this.basket.closeBasket();
-      },
+      }
     });
 
     this.viewer = new PhoneViewer({
       element: this.element.querySelector('[data-component="phone-viewer"]'),
-      items: Services.getAll(),
-      counter: this.basket.itemsCounter,
       onCatalog: () => {
         this.catalog.show();
         this.viewer.hide();
       },
-      addToBasket: (phoneId) => {
+      addToBasket: phoneId => {
         this.basket.items.push(phoneId);
-        this.basket.itemsCounter = this.catalog.increaseBasket(this.counter);
         this.basket.render();
-        this.basket.closeBasket();
       }
     });
   }
