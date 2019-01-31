@@ -1,25 +1,72 @@
 export default class Basket {
-  constructor({
-    icon,
-    itemsCounter,
-    element, 
-    title, 
-    items, 
-    open 
-}) {
+  constructor({ icon, itemsCounter, element, items, open }) {
     this.icon = icon;
     this.itemsCounter = itemsCounter;
     this.element = element;
-    this.title = title;
     this.items = items;
     this.open = open;
 
     this.render();
-    this.closeBasket();
-    this.openBasket();
+    this.countItems();
+
+    this.open.addEventListener("click", e => {
+      this.toggleBasket();
+    });
+
+    this.element.addEventListener("click", e => {
+      const closeBasket = e.target.closest(".basket__content-close");
+      const deleteBtn = e.target.closest('[data-element="delete"]');
+      const itemName = e.target.closest('[data-element="name"]');
+
+      if (deleteBtn) {
+        this.items.forEach(element => {
+          if (element.id === itemName.dataset.id) {
+            element.counter--;
+            this.render();
+            this.toggleBasket();
+            if (element.counter === 0) {
+              this.items.splice(this.items.indexOf(element), 1);
+              this.render();
+              this.toggleBasket();
+            }
+          }
+        });
+      } else if (closeBasket) {
+        this.toggleBasket();
+      }
+    });
+  }
+
+  toggleBasket() {
+    this.element
+      .querySelector(".basket__overlay")
+      .classList.toggle("active_overlay");
+    this.element
+      .querySelector(".basket__content")
+      .classList.toggle("active_content");
+  }
+
+  countItems() {
+    let temp = 0;
+    if (this.items.length === 0) {
+      return 0;
+    }
+    this.items.forEach(element => {
+      temp += element.counter;
+    });
+    return temp;
   }
 
   render() {
+    this.items = this.items.filter((a, b) => {
+      if (this.items.indexOf(a) === b) {
+        return true;
+      }
+      a.counter++;
+    });
+
+    this.itemsCounter = this.countItems();
+
     this.icon.innerHTML = `
       <img src="./images/cart-arrow-down-solid.svg" alt="basket" />
       <span>${this.itemsCounter}</span>
@@ -28,37 +75,21 @@ export default class Basket {
     <div class="basket__overlay"></div>
     <div class="basket__content">
       <div class="basket__content-close"></div>
-      <h3 class="basket__content-title">${this.title}</h3>
+      <h3 class="basket__content-title">Shopping Cart</h3>
       <ul class="basket__content-list">
         ${this.items
-    .map(item => `<li>${item} <span></span><button>x</button></li>`)
-    .join('')}
+          .map(
+            item => `<li>
+        <div data-element="name" data-id=${item.id}>
+        <h2>${item.name}</h2>
+        <span>${item.counter}</span>
+        <button data-element="delete">x</button>
+        </div>
+      </li>`
+          )
+          .join("")}
       </ul>
     </div>
     `;
-  }
-
-  openBasket() {
-    this.open.addEventListener('click', (e) => {
-      document
-        .querySelector('.basket__overlay')
-        .classList.add('active_overlay');
-      document
-        .querySelector('.basket__content')
-        .classList.add('active_content');
-    });
-  }
-
-  closeBasket() {
-    document
-      .querySelector('.basket__content-close')
-      .addEventListener('click', (e) => {
-        document
-          .querySelector('.basket__overlay')
-          .classList.remove('active_overlay');
-        document
-          .querySelector('.basket__content')
-          .classList.remove('active_content');
-      });
   }
 }
