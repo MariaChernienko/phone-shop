@@ -113,16 +113,19 @@
       text-align: center; }
     .basket__content-list {
       padding: 20px; }
-      .basket__content-list li {
+      .basket__content-list .list-item {
         color: white;
         font-size: 18px;
-        padding: 5px 0; }
-        .basket__content-list li span {
+        padding: 5px 0;
+        display: flex; }
+        .basket__content-list .list-item__title {
+          color: white; }
+        .basket__content-list .list-item__counter {
           color: white;
-          padding-left: 20px; }
-        .basket__content-list li button {
+          margin-left: 30px; }
+        .basket__content-list .list-item__remove {
           padding: 0 5px;
-          float: right;
+          margin-left: auto;
           border-radius: 2px; }
 
 .active_overlay {
@@ -157,19 +160,19 @@
       padding: 20px; }
       .content .phones .card__holder .phone__item {
         width: 290px;
+        height: 530px;
         border: 2px solid #e0e0e0;
         border-radius: 3px;
         padding: 15px;
         margin: 20px;
-        transition: all 0.2s ease-out; }
+        transition: all 0.2s ease-in-out; }
         .content .phones .card__holder .phone__item-image {
           width: 100%;
           cursor: pointer; }
         .content .phones .card__holder .phone__item-title {
           font-size: 20px;
           font-weight: bold;
-          text-align: center;
-          padding-bottom: 20px; }
+          text-align: center; }
         .content .phones .card__holder .phone__item-article {
           font-size: 18px;
           padding-bottom: 20px;
@@ -179,6 +182,7 @@
           justify-content: center; }
         .content .phones .card__holder .phone__item:hover {
           width: 300px;
+          height: 540px;
           margin-bottom: 0; }
   .content .details {
     display: flex;

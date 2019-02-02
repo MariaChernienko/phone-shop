@@ -14,7 +14,7 @@ export default class Basket {
     });
 
     this.element.addEventListener("click", e => {
-      const closeBasket = e.target.closest(".basket__content-close");
+      const closeBasket = e.target.closest('[data-action="close"]');
       const deleteBtn = e.target.closest('[data-element="delete"]');
       const itemName = e.target.closest('[data-element="name"]');
 
@@ -72,9 +72,9 @@ export default class Basket {
       <span>${this.itemsCounter}</span>
     `;
     this.element.innerHTML = `
-    <div class="basket__overlay"></div>
+    <div class="basket__overlay" data-action="close"></div>
     <div class="basket__content">
-      <div class="basket__content-close"></div>
+      <div class="basket__content-close" data-action="close"></div>
       <h3 class="basket__content-title">Shopping Cart</h3>
       <ul class="basket__content-list">
         ${this.items

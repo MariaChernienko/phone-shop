@@ -1,5 +1,7 @@
 export default class Basket {
-  constructor({ icon, itemsCounter, element, items, open }) {
+  constructor({
+ icon, itemsCounter, element, items, open 
+}) {
     this.icon = icon;
     this.itemsCounter = itemsCounter;
     this.element = element;
@@ -9,17 +11,17 @@ export default class Basket {
     this.render();
     this.countItems();
 
-    this.open.addEventListener("click", e => {
+    this.open.addEventListener('click', (e) => {
       this.toggleBasket();
     });
 
-    this.element.addEventListener("click", e => {
-      const closeBasket = e.target.closest(".basket__content-close");
+    this.element.addEventListener('click', (e) => {
+      const closeBasket = e.target.closest('[data-action="close"]');
       const deleteBtn = e.target.closest('[data-element="delete"]');
       const itemName = e.target.closest('[data-element="name"]');
 
       if (deleteBtn) {
-        this.items.forEach(element => {
+        this.items.forEach((element) => {
           if (element.id === itemName.dataset.id) {
             element.counter--;
             this.render();
@@ -39,11 +41,11 @@ export default class Basket {
 
   toggleBasket() {
     this.element
-      .querySelector(".basket__overlay")
-      .classList.toggle("active_overlay");
+      .querySelector('.basket__overlay')
+      .classList.toggle('active_overlay');
     this.element
-      .querySelector(".basket__content")
-      .classList.toggle("active_content");
+      .querySelector('.basket__content')
+      .classList.toggle('active_content');
   }
 
   countItems() {
@@ -51,7 +53,7 @@ export default class Basket {
     if (this.items.length === 0) {
       return 0;
     }
-    this.items.forEach(element => {
+    this.items.forEach((element) => {
       temp += element.counter;
     });
     return temp;
@@ -72,22 +74,22 @@ export default class Basket {
       <span>${this.itemsCounter}</span>
     `;
     this.element.innerHTML = `
-    <div class="basket__overlay"></div>
+    <div class="basket__overlay" data-action="close"></div>
     <div class="basket__content">
-      <div class="basket__content-close"></div>
+      <div class="basket__content-close" data-action="close"></div>
       <h3 class="basket__content-title">Shopping Cart</h3>
       <ul class="basket__content-list">
         ${this.items
-          .map(
-            item => `<li>
-        <div data-element="name" data-id=${item.id}>
-        <h2>${item.name}</h2>
-        <span>${item.counter}</span>
-        <button data-element="delete">x</button>
-        </div>
-      </li>`
-          )
-          .join("")}
+    .map(
+      item => `
+              <li class="list-item" data-element="name" data-id=${item.id}>
+                <h2 class="list-item__title">${item.name}</h2>
+                <span class="list-item__counter">${item.counter}</span>
+                <button class="list-item__remove" data-element="delete">x</button>
+              </li>
+            `,
+    )
+    .join('')}
       </ul>
     </div>
     `;

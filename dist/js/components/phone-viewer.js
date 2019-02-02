@@ -1,4 +1,4 @@
-import Services from "./services.js";
+import Services from './services.js';
 
 export default class PhoneViewer {
   constructor({ element, onCatalog = () => {}, addToBasket = () => {} }) {
@@ -6,13 +6,14 @@ export default class PhoneViewer {
     this.onCatalog = onCatalog;
     this.addToBasket = addToBasket;
 
-    this.element.addEventListener("click", e => {
+    this.element.addEventListener('click', (e) => {
       const buttonBack = e.target.closest('[data-button="back"]');
       const addBtn = e.target.closest('[data-element="add-to-basket"]');
       const phoneElement = e.target.closest('[data-element="phone-item"]');
+      const phonePhoto = e.target.closest('[data-photo]');
       let phoneName;
 
-      Services.getAll().find(e => {
+      Services.getAll().find((e) => {
         if (e.id === phoneElement.dataset.phoneId) {
           phoneName = e;
         }
@@ -22,6 +23,8 @@ export default class PhoneViewer {
         this.onCatalog();
       } else if (addBtn) {
         this.addToBasket(phoneName);
+      } else if (phonePhoto) {
+        this.render(e.target.dataset.photo);
       }
     });
   }
@@ -29,18 +32,20 @@ export default class PhoneViewer {
   show(phoneDetails) {
     this._phoneDetails = phoneDetails;
     this.element.hidden = false;
-    this.render();
+    let mainPic = this._phoneDetails.images[0];
+    this.render(mainPic);
   }
+
   hide() {
     this.element.hidden = true;
   }
 
-  render() {
+  render(mainPic) {
     this.element.innerHTML = `
     <div class="details"
       data-phone-id="${this._phoneDetails.id}"
       data-element="phone-item"> 
-      <img class="details__image" src="${this._phoneDetails.images[0]}">
+      <img class="details__image" src="${mainPic}">
       <div class="details__info">
         <button data-button="back">Back</button>
         <button data-element="add-to-basket">Add to basket</button>
@@ -51,12 +56,12 @@ export default class PhoneViewer {
 
         <ul class="phone-thumbs">
         ${this._phoneDetails.images
-          .map(
-            item => `<li>
-        <img src=${item}>
-      </li>`
-          )
-          .join("")}
+    .map(
+      item => `<li>
+        <img src=${item} data-photo="${item}">
+      </li>`,
+    )
+    .join('')}
         </ul>
       </div>
     `;
