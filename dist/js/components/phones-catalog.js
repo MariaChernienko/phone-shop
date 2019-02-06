@@ -49,7 +49,7 @@ export default class PhonesCatalog {
     <ul class="phones">
       ${this.items
     .map(
-      item => `<li class="card__holder" 
+      item => console.log(item) + `<li class="card__holder" 
       data-phone-id="${item.id}"
       data-element="phone-item">
       <div class="phone__item">
